@@ -1,4 +1,12 @@
 *~
 *.cmi
 *.cmo
+*.cma
+*.cmx
+*.cmxa
+*.o
+*.a
+
+.omakedb*
+*.omc
 a.out

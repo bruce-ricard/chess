@@ -1,17 +1,13 @@
-module type PIECE =
-sig
-  type t
-end
-
 module ArrayBoard =
 struct
+  open Piece
   open Piece
 
   type rank = Piece.t option array
   type t = rank array
 
   let piece_rank color p1 p2 p3 p4 p5 p6 p7 p8 : rank =
-    let p pn = Some (Piece (color, pn)) in
+    let p pn = Some (Piece.Piece (color, pn)) in
     [|p p1; p p2; p p3; p p4; p p5; p p6; p p7; p p8|]
 
   let pawn_rank color =
@@ -37,7 +33,7 @@ struct
 
   type fen_list = FenPiece of Piece.t | Blanks of int
 
-  let rec rank_to_list (rank : rank) blanks = function
+  let rec rank_to_list rank blanks = function
     | 8 -> if blanks > 0 then [Blanks(blanks)] else []
     | n ->
       begin
@@ -78,4 +74,5 @@ module type BOARD =
 sig
   type t
   val init_board : unit -> t
+  val to_fen : t -> string
 end

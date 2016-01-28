@@ -1,5 +1,4 @@
-
-module Position (Board : BOARD)=
+module Position (Board : Board.BOARD) =
 struct
   type active_color = White | Black
 
@@ -72,6 +71,7 @@ struct
     val increment : t -> t
     val make : unit ->  t
     val reset : unit -> t
+    val to_fen : t -> string
   end
 
   module HalfMoves : HALF_MOVES =
@@ -80,6 +80,7 @@ struct
     let increment moves = moves + 1
     let make () = 0
     let reset = make
+    let to_fen = string_of_int
   end
     type full_moves = int
 
@@ -93,9 +94,13 @@ struct
 	 full_moves : HalfMoves.t ;
       }
 
+  let (^^) s1 s2 = s1 ^ " " ^ s2
+
   let position_to_fen position =
-    Board.board_to_fen position.board ^
-      players_castling_rights_to_fen position.castling_rights ^
-      en_passant_to_fen position.en_passant ^
+    (Board.to_fen position.board ^^
+      players_castling_rights_to_fen position.castling_rights ^^
+      en_passant_to_fen position.en_passant ^^
+      HalfMoves.to_fen position.half_moves ^^
+      HalfMoves.to_fen position.full_moves)
 
 end
