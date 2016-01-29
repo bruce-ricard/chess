@@ -1,4 +1,11 @@
-module ArrayBoard =
+module type BOARD =
+sig
+  type t
+  val init_board : unit -> t
+  val to_fen : t -> string
+end
+
+module ArrayBoard : BOARD =
 struct
   open Piece
   open Piece
@@ -60,19 +67,6 @@ struct
     | rank :: ranks -> rank_list_to_fen rank ^ "/" ^ board_list_to_fen ranks
     | [] -> failwith "impossible"
 
-  let board_to_fen board =
+  let to_fen board =
     board_list_to_fen (board_to_list board 0)
-
-  let x = board_to_fen (init_board ())
-
-  let _ = print_endline x
-end;;
-
-ArrayBoard.init_board ();;
-
-module type BOARD =
-sig
-  type t
-  val init_board : unit -> t
-  val to_fen : t -> string
 end

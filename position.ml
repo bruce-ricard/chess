@@ -94,6 +94,16 @@ struct
 	 full_moves : HalfMoves.t ;
       }
 
+  let new_position () =
+    { board = Board.init_board();
+      active_color = White;
+      castling_rights =
+	{ white = Both ; black = Both };
+      en_passant = EP None;
+      half_moves = HalfMoves.make ();
+      full_moves = HalfMoves.make ();
+    }
+
   let (^^) s1 s2 = s1 ^ " " ^ s2
 
   let position_to_fen position =
