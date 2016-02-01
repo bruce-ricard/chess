@@ -10,3 +10,5 @@
 .omakedb*
 *.omc
 a.out
+main
+main.opt
