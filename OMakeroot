@@ -15,23 +15,13 @@
 # THE USE OR OTHER DEALINGS IN THE FILE.
 
 ########################################################################
-# The standard OMakeroot file.
-# You will not normally need to modify this file.
-# By default, your changes should be placed in the
-# OMakefile in this directory.
-#
-# If you decide to modify this file, note that it uses exactly
-# the same syntax as the OMakefile.
-#
-
-#
 # Include the standard installed configuration files.
 # Any of these can be deleted if you are not using them,
 # but you probably want to keep the Common file.
 #
-open build/C
+# open build/C
 open build/OCaml
-open build/LaTeX
+# open build/LaTeX
 
 #
 # The command-line variables are defined *after* the
@@ -39,7 +29,10 @@ open build/LaTeX
 #
 DefineCommandVars()
 
-#
-# Include the OMakefile in this directory.
-#
+ROOT_DIR = $(shell pwd)
+SRC_DIR = $(ROOT_DIR)/src
+BIN_DIR = $(ROOT_DIR)/bin
+
 .SUBDIRS: .
+
+.PHONY: clean lib
