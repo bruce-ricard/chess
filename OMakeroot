@@ -28,11 +28,8 @@ open build/OCaml
 # standard configuration has been loaded.
 #
 DefineCommandVars()
-
 ROOT_DIR = $(shell pwd)
 SRC_DIR = $(ROOT_DIR)/src
 BIN_DIR = $(ROOT_DIR)/bin
 
 .SUBDIRS: .
-
-.PHONY: clean lib

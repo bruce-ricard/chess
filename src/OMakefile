@@ -25,7 +25,7 @@
 # Phony targets are scoped, so you probably want to declare them first.
 #
 
-# .PHONY: all install clean
+.PHONY: all install clean
 
 ########################################################################
 # Subdirectories.
@@ -101,9 +101,10 @@ FILES[] =
 	piece
 
 
-LIB = ../bin/chess
+#LIB = $(BIN_DIR)/chess
+LIB = bruce
 
-lib: $(OCamlLibrary $(LIB), $(FILES))
+OCamlLibrary(bruce, position board piece)
 
 ################################################
 # Build an OCaml program
@@ -112,13 +113,22 @@ lib: $(OCamlLibrary $(LIB), $(FILES))
 FILES[] =
 	main
 
-PROGRAM = ../bin/main
-OCAML_LIBS += ../bin/chess
+PROGRAM = $(BIN_DIR)/main
+OCAML_LIBS += $(LIB)
 # OCAML_CLIBS +=
 # OCAML_OTHER_LIBS +=
 # OCAML_LIB_FLAGS +=
 #
-.DEFAULT: $(OCamlProgram $(PROGRAM), $(FILES))
+
+OCamlProgram(main, $(FILES))
+
+.DEFAULT: main
+
+
 
 clean:
-	rm -fr *.cm* *.o *.a *~ *.omc main main.opt
+	echo 'cleaning?'
+	rm -f *.cm* *.o *.a *~ *.omc main main.opt
+
+test:
+	echo mais wtf is going on

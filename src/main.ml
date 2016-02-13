@@ -6,4 +6,4 @@ open ChessPosition
 
 let position = new_position();;
 
-print_endline (position_to_fen (position))
+let _ = print_endline (position_to_fen (position))
