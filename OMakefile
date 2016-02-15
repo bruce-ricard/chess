@@ -48,5 +48,4 @@ OCAMLFLAGS    += -g
 .SUBDIRS: src
 
 clean:
-	echo 'cleaning root?'
 	rm -fr $(BIN)/*

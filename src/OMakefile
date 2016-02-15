@@ -99,6 +99,7 @@ FILES[] =
 	board
 #	llist
 	piece
+	move
 
 
 LIB = $(BIN_DIR)/chess
@@ -127,7 +128,6 @@ OCamlProgram($(PROGRAM), $(FILES))
 
 
 clean:
-	echo 'cleaning?'
 	rm -f *.cm* *.o *.a *~ *.omc main main.opt
 
 test:
