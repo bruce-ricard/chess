@@ -100,6 +100,7 @@ FILES[] =
 #	llist
 	piece
 	move
+	moves
 
 
 LIB = $(BIN_DIR)/chess
@@ -128,7 +129,9 @@ OCamlProgram($(PROGRAM), $(FILES))
 
 
 clean:
-	rm -f *.cm* *.o *.a *~ *.omc main main.opt
+	rm -f *.cm* *.o *.a *~ *.omc main main.opt move.ml
+	rm -f $(basename `ls *.mll` .mll).ml
+	rm -f $(basename `ls *.mll` .mly).ml?
 
 test:
 	echo mais wtf is going on
