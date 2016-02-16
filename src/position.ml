@@ -26,43 +26,11 @@ struct
 
   let x = players_castling_rights_to_fen {white = QueenSide; black = Both}
 
-  type rank_name = One | Two | Three | Four | Five | Six | Seven | Eight
-
-  let rank_name_to_fen = function
-    | One -> '1'
-    | Two -> '2'
-    | Three -> '3'
-    | Four -> '4'
-    | Five -> '5'
-    | Six -> '6'
-    | Seven -> '7'
-    | Eight -> '8'
-
-  type file_name = A | B | C | D | E | F | G | H
-
-  let file_name_to_fen = function
-    | A -> 'a'
-    | B -> 'b'
-    | C -> 'c'
-    | D -> 'd'
-    | E -> 'e'
-    | F -> 'f'
-    | G -> 'g'
-    | H -> 'h'
-
-  type square = Square of file_name * rank_name
-
-  let (^$) c s = String.make 1 c ^ s
-
-  let square_to_fen = function
-    | Square (file, rank) ->
-      file_name_to_fen file ^$ rank_name_to_fen rank ^$ ""
-
-  type en_passant = EP of square option
+  type en_passant = EP of Coordinates.square option
 
   let en_passant_to_fen = function
     | EP None -> "-"
-    | EP (Some square) -> square_to_fen square
+    | EP (Some square) -> Coordinates.square_to_fen square
 
   module type HALF_MOVES =
   sig

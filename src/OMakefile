@@ -95,13 +95,12 @@ OCAMLFLAGS    += -g
 #
 
 FILES[] =
-	position
 	board
-#	llist
-	piece
+	coordinates
 	move
 	moves
-
+	piece
+	position
 
 LIB = $(BIN_DIR)/chess
 #LIB = bruce

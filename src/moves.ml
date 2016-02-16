@@ -1,4 +1,4 @@
-open Board.Coordinates
+open Coordinates
 
 type piece_move_description = {
   starting_file : file option;
