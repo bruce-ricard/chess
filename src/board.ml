@@ -5,6 +5,13 @@ sig
   val to_fen : t -> string
 end
 
+module Coordinates =
+struct
+  type rank = One | Two | Three | Four | Five | Six | Seven | Eight
+  type file = A | B | C | D | E | F | G | H
+  type square = Square of file * rank
+end
+
 module ArrayBoard : BOARD =
 struct
   open Piece

@@ -1,8 +1,4 @@
-type rank = One | Two | Three | Four | Five | Six | Seven | Eight
-
-type file = A | B | C | D | E | F | G | H
-
-type square = Square of file * rank
+open Board.Coordinates
 
 type piece_move_description = {
   starting_file : file option;
