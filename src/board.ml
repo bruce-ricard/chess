@@ -2,6 +2,7 @@ module type BOARD =
 sig
   type t
   val init_board : unit -> t
+  val move : Coordinates.square -> Coordinates.square -> t -> t
   val to_fen : t -> string
 end
 
@@ -54,7 +55,7 @@ struct
 
   let rec board_to_list (board : t) = function
     | 8 -> []
-    | n -> rank_to_list board.(n) 0 0 :: board_to_list board (n+ 1)
+    | n -> rank_to_list board.(n) 0 0 :: board_to_list board (n + 1)
 
   let rec rank_list_to_fen = function
     | [] -> ""
@@ -69,4 +70,35 @@ struct
 
   let to_fen board =
     board_list_to_fen (board_to_list board 0)
+
+let rank_name_to_position = let open Coordinates in function
+  | One -> 0
+  | Two -> 1
+  | Three -> 2
+  | Four -> 3
+  | Five -> 4
+  | Six ->  5
+  | Seven -> 6
+  | Eight -> 7
+
+let file_name_to_position = let open Coordinates in function
+  | A -> 0
+  | B -> 1
+  | C -> 2
+  | D -> 3
+  | E -> 4
+  | F -> 5
+  | G -> 6
+  | H -> 7
+
+let square_to_position = let open Coordinates in function
+Square (file, rank) -> file_name_to_position file, (rank_name_to_position rank)
+
+let move init_square end_square board =
+  let x0,y0 = square_to_position init_square
+  and x1,y1 = square_to_position end_square in
+
+  board.(x1).(y1) <- board.(x0).(y0);
+  board.(x0).(y0) <- None;
+  board
 end
