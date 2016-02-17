@@ -98,7 +98,7 @@ let move init_square end_square board =
   let x0,y0 = square_to_position init_square
   and x1,y1 = square_to_position end_square in
 
-  board.(x1).(y1) <- board.(x0).(y0);
-  board.(x0).(y0) <- None;
+  board.(y1).(x1) <- board.(y0).(x0);
+  board.(y0).(x0) <- None;
   board
 end
