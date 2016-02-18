@@ -97,6 +97,8 @@ OCAMLFLAGS    += -g
 FILES[] =
 	board
 	coordinates
+	coordinatesTypes
+	coordinatesHelper
 	move
 	moves
 	piece
