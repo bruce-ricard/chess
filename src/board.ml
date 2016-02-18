@@ -2,7 +2,7 @@ module type BOARD =
 sig
   type t
   val init_board : unit -> t
-  val on_square : t -> Coordinates.square -> Piece.Piece.t option
+  val on_square : t -> Coordinates.square -> Piece.t option
   val move : Coordinates.square -> Coordinates.square -> t -> t
   val to_fen : t -> string
 end
@@ -10,13 +10,12 @@ end
 module ArrayBoard : BOARD =
 struct
   open Piece
-  open Piece
 
   type rank = Piece.t option array
   type t = rank array
 
   let piece_rank color p1 p2 p3 p4 p5 p6 p7 p8 : rank =
-    let p pn = Some (Piece.Piece (color, pn)) in
+    let p pn = Some (Piece (color, pn)) in
     [|p p1; p p2; p p3; p p4; p p5; p p6; p p7; p p8|]
 
   let pawn_rank color =

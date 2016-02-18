@@ -1,7 +1,7 @@
 open Coordinates
 
 type piece_move_description = {
-  piece : Piece.Piece.t;
+  piece : Piece.t;
   starting_file : file option;
   starting_rank : rank option;
   final_square : square;
