@@ -1,6 +1,7 @@
 open Coordinates
 
 type piece_move_description = {
+  piece : Piece.Piece.t;
   starting_file : file option;
   starting_rank : rank option;
   final_square : square;
@@ -14,8 +15,8 @@ type pawn_capture_description = {
 }
 
 type move =
-    Pawn of square
+  | Pawn of square
   | PawnCapture of pawn_capture_description
-  | PieceMove of Piece.Piece.piece_kind * piece_move_description
+  | PieceMove of piece_move_description
 
 type game = Game of move list

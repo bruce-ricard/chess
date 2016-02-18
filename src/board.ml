@@ -2,6 +2,7 @@ module type BOARD =
 sig
   type t
   val init_board : unit -> t
+  val on_square : t -> Coordinates.square -> Piece.Piece.t option
   val move : Coordinates.square -> Coordinates.square -> t -> t
   val to_fen : t -> string
 end
@@ -93,6 +94,10 @@ let file_name_to_position = let open Coordinates in function
 
 let square_to_position = let open Coordinates in function
 Square (file, rank) -> file_name_to_position file, (rank_name_to_position rank)
+
+let on_square board s =
+  let y,x = square_to_position s in
+  board.(x).(y)
 
 let move init_square end_square board =
   let x0,y0 = square_to_position init_square
