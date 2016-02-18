@@ -80,3 +80,15 @@ let rook_moves square =
 
 let queen_moves square =
   rook_moves square @ (bishop_moves square)
+
+let king_moves square =
+  let file,rank = ints_of_square square in
+  remove_none
+    [square_of_ints (file + 1) (rank + 1);
+     square_of_ints (file + 1) (rank);
+     square_of_ints (file + 1) (rank - 1);
+     square_of_ints (file) (rank + 1);
+     square_of_ints (file) (rank - 1);
+     square_of_ints (file - 1) (rank + 1);
+     square_of_ints (file - 1) (rank);
+     square_of_ints (file - 1) (rank - 1)]
