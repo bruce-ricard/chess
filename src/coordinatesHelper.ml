@@ -13,6 +13,11 @@ let square_of_ints file rank =
   else
     None
 
+let square_of_ints_unsafe file rank =
+  match square_of_ints file rank with
+    | Some square -> square
+    | None -> failwith "Square out of bounds!"
+
 let is_square file rank = file >= 0 && file <= 7 && rank >= 0 && rank <= 7
 
 let ints_of_square = function
@@ -92,3 +97,37 @@ let king_moves square =
      square_of_ints (file - 1) (rank + 1);
      square_of_ints (file - 1) (rank);
      square_of_ints (file - 1) (rank - 1)]
+
+type pawnMove =
+  | OnePossible of square
+  | TwoPossible of square * square
+
+let white_pawn_moves square =
+  let file,rank = ints_of_square square in
+  match square with
+    | Square (f, r) ->
+      begin
+	match r with
+	  | One | Two -> failwith "impossible"
+	  | Three -> OnePossible (Square (f, Two))
+	  | Four -> TwoPossible (Square (f, Three), Square (f, Two))
+	  | _ -> OnePossible (square_of_ints_unsafe (file - 1) rank)
+      end
+
+let black_pawn_moves square =
+  let file,rank = ints_of_square square in
+  match square with
+    | Square (f, r) ->
+      begin
+	match r with
+	  | Eight | Seven -> failwith "impossible"
+	  | Six -> OnePossible (Square (f, Seven))
+	  | Five -> TwoPossible (Square (f, Six), Square (f, Seven))
+	  | _ -> OnePossible (square_of_ints_unsafe (file + 1) rank)
+      end
+
+let pawn_moves color square =
+  let open Piece in
+  match color with
+    | White -> white_pawn_moves square
+    | Black -> black_pawn_moves square
