@@ -77,3 +77,6 @@ let rank_squares file rank =
 let rook_moves square =
   let file,rank = ints_of_square square in
   remove_none (file_squares file rank @ (rank_squares file rank));;
+
+let queen_moves square =
+  rook_moves square @ (bishop_moves square)
