@@ -52,7 +52,28 @@ let bishop_moves square =
     (diagonal file rank false true) @
     (diagonal file rank false false));;
 
-    bishop_moves (Square (E, Three));;
+let file_squares file rank =
+  let rec file_aux = function
+    | 8 -> []
+    | n ->
+      if n = file then
+	file_aux (n + 1)
+      else
+	square_of_ints n rank :: (file_aux (n + 1))
+  in
+  file_aux 0
+
+let rank_squares file rank =
+  let rec rank_aux = function
+    | 8 -> []
+    | n ->
+      if n = rank then
+	rank_aux (n + 1)
+      else
+	square_of_ints file n :: (rank_aux (n + 1))
+  in
+  rank_aux 0
 
 let rook_moves square =
-  let file,rank = ints_of_square square in ()
+  let file,rank = ints_of_square square in
+  remove_none (file_squares file rank @ (rank_squares file rank));;
