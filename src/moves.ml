@@ -1,7 +1,7 @@
 open Coordinates
 
 type piece_move_description = {
-  piece : Piece.t;
+  piece : Piece.non_pawn;
   starting_file : file option;
   starting_rank : rank option;
   final_square : square;
@@ -16,7 +16,7 @@ type pawn_capture_description = {
 
 type move =
   | Pawn of square
-  | PawnPromotion of file * Piece.t
+  | PawnPromotion of file * Piece.promotable
   | PawnCapture of pawn_capture_description
   | PieceMove of piece_move_description
 

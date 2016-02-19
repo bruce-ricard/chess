@@ -19,11 +19,11 @@ struct
     [|p p1; p p2; p p3; p p4; p p5; p p6; p p7; p p8|]
 
   let pawn_rank color =
-    piece_rank color Pawn Pawn Pawn Pawn Pawn Pawn Pawn Pawn
+    piece_rank color `Pawn `Pawn `Pawn `Pawn `Pawn `Pawn `Pawn `Pawn
 
   let first_rank color =
     piece_rank color
-      Rook Knight Bishop Queen King Bishop Knight Rook
+      `Rook `Knight `Bishop `Queen `King `Bishop `Knight `Rook
 
   let empty_rank () : rank = Array.make 8 None
 

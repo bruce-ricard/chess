@@ -1,14 +1,16 @@
-type piece_kind = King | Queen | Rook | Bishop | Knight | Pawn
+type promotable = [ `Queen | `Rook | `Bishop | `Knight ]
+type non_pawn = [ `King | promotable ]
+type piece_kind = [ non_pawn | `Pawn ]
 type color = White | Black
 type t = Piece of color * piece_kind
 
-let fen_letter = function
-  | King -> 'k'
-  | Queen -> 'q'
-  | Rook -> 'r'
-  | Bishop -> 'b'
-  | Knight -> 'n'
-  | Pawn -> 'p'
+let (fen_letter : piece_kind -> char) = function
+  | `King -> 'k'
+  | `Queen -> 'q'
+  | `Rook -> 'r'
+  | `Bishop -> 'b'
+  | `Knight -> 'n'
+  | `Pawn -> 'p'
 
 let to_fen = function
   | Piece (color, kind) ->
