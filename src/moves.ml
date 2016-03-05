@@ -15,7 +15,7 @@ type pawn_capture_description = {
 }
 
 type move =
-  | Pawn of square
+  | PawnMove of square
   | PawnPromotion of file * Piece.promotable
   | PawnCapture of pawn_capture_description
   | PieceMove of piece_move_description

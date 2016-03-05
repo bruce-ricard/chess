@@ -1,7 +1,10 @@
 module type BOARD =
 sig
   type t
-  type descriptive_move
+  type descriptive_move = {
+    starting_square : Coordinates.square;
+    destination_square : Coordinates.square
+  }
   val init_board : unit -> t
 (*  val on_square : t -> Coordinates.square -> Piece.t option*)
   val move : descriptive_move -> t -> t
@@ -14,18 +17,11 @@ struct
 
   type rank = Piece.t option array
   type t = rank array
-  type square = Square of Coordinates.file * Coordinates.rank
 
   type descriptive_move = {
     starting_square : Coordinates.square;
     destination_square : Coordinates.square
   }
-
-
-  let square_to_fen = function
-    | Square (file, rank) ->
-      file_name_to_fen file ^$ rank_name_to_fen rank ^$ ""
-
 
   let piece_rank color p1 p2 p3 p4 p5 p6 p7 p8 : rank =
     let p pn = Some (Piece (color, pn)) in
@@ -111,11 +107,40 @@ let on_square board s =
   let y,x = square_to_position s in
   board.(x).(y)
 
-let move init_square end_square board =
+let move
+    {starting_square = init_square ; destination_square = end_square }
+    board =
+
   let x0,y0 = square_to_position init_square
   and x1,y1 = square_to_position end_square in
 
   board.(y1).(x1) <- board.(y0).(x0);
   board.(y0).(x0) <- None;
   board
+
+
+
+exception ImpossibleMove
+
+let move_pawn_once color to_square board =
+  let open CoordinatesHelper in
+  match CoordinatesHelper.pawn_moves color to_square with
+    | OnePossible(from_square) ->
+      begin
+        match on_square board from_square with
+          | Some `Pawn ->
+            {
+              starting_square = from_square;
+              destination_square = to_square
+            }
+          | _ -> raise ImpossibleMove
+      end
+    | TwoPossible(from_square1, from_square2) ->
+      failwith "extract method above and reuse"
+
+let move_once color board = let open Moves in function
+  | PawnMove(square) -> move_pawn_once color square board
+  | _ -> failwith "not finished"
+
+
 end

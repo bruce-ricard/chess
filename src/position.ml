@@ -81,27 +81,4 @@ struct
       HalfMoves.to_fen position.half_moves ^^
       HalfMoves.to_fen position.full_moves)
 
-
-
-exception ImpossibleMove
-
-let move_pawn_once color to_square board =
-  let open CoordinatesHelper in
-  match CoordinatesHelper.pawn_moves color to_square with
-    | OnePossible(from_square) ->
-      begin
-        match Board.on_square board square with
-          | Some `Pawn ->
-            {
-              starting_square = from_square;
-              destination_square = to_square
-            }
-          | _ -> raise ImpossibleMove
-      end
-    | TwoPossible(from_square1, from_square2) ->
-      failwith "extract method above and reuse"
-
-let move_once color board = function
-  | Pawn(square) -> move_pawn_once color square board
-
 end
