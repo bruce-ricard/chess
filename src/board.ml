@@ -1,9 +1,10 @@
 module type BOARD =
 sig
   type t
+  type descriptive_move
   val init_board : unit -> t
-  val on_square : t -> Coordinates.square -> Piece.t option
-  val move : Coordinates.square -> Coordinates.square -> t -> t
+(*  val on_square : t -> Coordinates.square -> Piece.t option*)
+  val move : descriptive_move -> t -> t
   val to_fen : t -> string
 end
 
@@ -13,6 +14,18 @@ struct
 
   type rank = Piece.t option array
   type t = rank array
+  type square = Square of Coordinates.file * Coordinates.rank
+
+  type descriptive_move = {
+    starting_square : Coordinates.square;
+    destination_square : Coordinates.square
+  }
+
+
+  let square_to_fen = function
+    | Square (file, rank) ->
+      file_name_to_fen file ^$ rank_name_to_fen rank ^$ ""
+
 
   let piece_rank color p1 p2 p3 p4 p5 p6 p7 p8 : rank =
     let p pn = Some (Piece (color, pn)) in
