@@ -128,10 +128,34 @@ let move_pawn_once color to_square board =
           | _ -> raise ImpossibleMove
       end
     | TwoPossible(from_square1, from_square2) ->
-      failwith "extract method above and reuse"
+      begin
+        let possible1 = on_square board from_square1
+        and possible2 = on_square board from_square2 in
+        begin
+          match possible1, possible2 with
+            | Some `Pawn, _ ->
+              {
+                Coordinates.starting_square = from_square1;
+                Coordinates.destination_square = to_square
+              }
+            | _, Some `Pawn ->
+              {
+                Coordinates.starting_square = from_square2;
+                Coordinates.destination_square = to_square
+              }
+            | _ -> raise ImpossibleMove
 
-let move_once color board = let open Moves in function
+        end
+      end
+
+let move_pawn_promotion color file promotion_piece board =
+  let open CoordinatesHelper in failwith ""
+(*  match CoordinatesHelper.pawn_moves color  with
+    | OnePossible(from_square) -> failwith ""*)
+
+let make_descriptive_move color board = let open Moves in function
   | PawnMove(square) -> move_pawn_once color square board
+  | PawnPromotion(file, piece) -> move_pawn_promotion color file piece board
   | _ -> failwith "not finished"
 
 

@@ -4,5 +4,5 @@ type square = Square of file * rank
 
 type descriptive_move = {
   starting_square : square;
-  destination_square : square
+  destination_square : square;
 }
