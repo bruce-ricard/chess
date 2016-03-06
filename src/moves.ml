@@ -18,6 +18,7 @@ type move =
   | PawnMove of square
   | PawnPromotion of file * Piece.promotable
   | PawnCapture of pawn_capture_description
+  | PawnCapturePromotion of pawn_capture_description * Piece.promotable
   | PieceMove of piece_move_description
 
 type game = Game of move list
