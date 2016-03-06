@@ -1,13 +1,9 @@
 module type BOARD =
 sig
   type t
-  type descriptive_move = {
-    starting_square : Coordinates.square;
-    destination_square : Coordinates.square
-  }
   val init_board : unit -> t
 (*  val on_square : t -> Coordinates.square -> Piece.t option*)
-  val move : descriptive_move -> t -> t
+  val move : Coordinates.descriptive_move -> t -> t
   val to_fen : t -> string
 end
 
@@ -17,11 +13,6 @@ struct
 
   type rank = Piece.t option array
   type t = rank array
-
-  type descriptive_move = {
-    starting_square : Coordinates.square;
-    destination_square : Coordinates.square
-  }
 
   let piece_rank color p1 p2 p3 p4 p5 p6 p7 p8 : rank =
     let p pn = Some (Piece (color, pn)) in
@@ -108,7 +99,8 @@ let on_square board s =
   board.(x).(y)
 
 let move
-    {starting_square = init_square ; destination_square = end_square }
+    {Coordinates.starting_square = init_square ;
+     Coordinates.destination_square = end_square}
     board =
 
   let x0,y0 = square_to_position init_square
@@ -130,8 +122,8 @@ let move_pawn_once color to_square board =
         match on_square board from_square with
           | Some `Pawn ->
             {
-              starting_square = from_square;
-              destination_square = to_square
+              Coordinates.starting_square = from_square;
+              Coordinates.destination_square = to_square
             }
           | _ -> raise ImpossibleMove
       end
