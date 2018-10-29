@@ -1,6 +1,5 @@
 #!/bin/bash
 
-mkdir -p pgns
 cd pgns
 
 rm -f one_per_line.pgn

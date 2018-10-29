@@ -2,6 +2,7 @@
 
 set -x
 
+mkdir -p pgns
 cd pgns
 
 curl 'http://www.chessclub.org/all-games.php' > all-games.php
